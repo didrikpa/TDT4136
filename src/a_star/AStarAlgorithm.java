@@ -65,27 +65,34 @@ public class AStarAlgorithm {
                 continue;
             }
             else {
-                nodes.get(i).setgValue();
+                nodes.get(i).setgValue(nodes.get(i).getBoardValue());
                 nodes.get(i).sethValue(goalNode);
                 nodes.get(i).setfValue();
             }
         }
     }
 
-    public void findNeighbours(Node current){
-        for (int i = 0; i <nodes.size() ; i++) {
-            if (nodes.get(i).getBoardValue().equals(".") || nodes.get(i).getBoardValue().equals("B")) {
-                if ((Math.abs(nodes.get(i).getyCoord() - current.getyCoord()) <= 1) && (nodes.get(i).getxCoord() == current.getxCoord()) && (!nodes.get(i).equals(current)) && !open.contains(nodes.get(i)) && !closed.contains(nodes.get(i))) {
-                    nodes.get(i).setParent(current);
-                    open.add(nodes.get(i));
-                    nodes.remove(nodes.get(i));
-                } else if ((Math.abs(nodes.get(i).getxCoord() - current.getxCoord()) <= 1) && (nodes.get(i).getyCoord() == current.getyCoord()) && (!nodes.get(i).equals(current)) &&  !open.contains(nodes.get(i)) && !closed.contains(nodes.get(i))) {
-                    nodes.get(i).setParent(current);
-                    open.add(nodes.get(i));
-                    nodes.remove(nodes.get(i));
+    public void findNeighboursWithWeights(Node current){
+        for (int j = 0; j < 4; j++) {
+            for (int i = 0; i <nodes.size() ; i++) {
+                if (("[wmfgrB.]").indexOf(nodes.get(i).getBoardValue()) != -1){
+                    if ((Math.abs(nodes.get(i).getyCoord() - current.getyCoord()) <= 1) && (nodes.get(i).getxCoord() == current.getxCoord()) && (!nodes.get(i).equals(current)) && !open.contains(nodes.get(i))) {
+                        nodes.get(i).setParent(current);
+                        nodes.get(i).updategValue(nodes.get(i).getParent());
+                        nodes.get(i).setfValue();
+                        open.add(nodes.get(i));
+                        nodes.remove(nodes.get(i));
+                    } else if ((Math.abs(nodes.get(i).getxCoord() - current.getxCoord()) <= 1) && (nodes.get(i).getyCoord() == current.getyCoord()) && (!nodes.get(i).equals(current)) &&  !open.contains(nodes.get(i))) {
+                        nodes.get(i).setParent(current);
+                        nodes.get(i).updategValue(nodes.get(i).getParent());
+                        nodes.get(i).setfValue();
+                        open.add(nodes.get(i));
+                        nodes.remove(nodes.get(i));
+                    }
                 }
             }
         }
+
     }
 
     public void aStar(){
@@ -95,41 +102,38 @@ public class AStarAlgorithm {
         open.add(current);
         nodes.remove(current);
         Boolean solution = false;
-        int counter = 0;
-        while(solution == false){
+        while(!solution){
             for (int i = 0; i <open.size(); i++) {
-                findNeighbours(current);
+                findNeighboursWithWeights(current);
             }
             open.remove(current);
             closed.add(current);
-            for (int i = 0; i < open.size(); i++) {
-                  if (open.get(i).parent.gethValue() == 1){
-                      System.out.println(open.get(i).getxCoord()+ " " + open.get(i).getyCoord() + "yay");
-                      solution = true;
-                      boolean c = true;
-                      while (c){
-                          if (current.hasParent()){
-                              board.get(current.getxCoord()).set(current.getyCoord(), "R");
-                              current = current.getParent();
-                          } else{
-                              printBoard();
-                              c = false;
-                          }
-                      }
-                      break;
-                  }
-            }
-            current = open.get(0);
-            if (open.size()>1){
-                for (int i = 0; i < open.size(); i++) {
-                    open.get(i).setgValue(open.get(i).getParent().getgValue());
-                    if(open.get(i).getfValue() < current.getfValue()){
-                        current = open.get(i);
+            if (current == goalNode){
+                boolean c = true;
+                while (c){
+                    if (current.hasParent()){
+                        board.get(current.getxCoord()).set(current.getyCoord(), "P");
+                        current = current.getParent();
+                    } else{
+                        printBoard();
+                        c = false;
                     }
                 }
+                break;
             }
-            if (current.getBoardValue().equals(".")) {
-                board.get(current.getxCoord()).set(current.getyCoord(), "O");
+            current = open.get(0);
+            for (int i = 0; i < open.size(); i++) {
+                if(open.get(i).getfValue() < current.getfValue()){
+                    current = open.get(i);
+                }
+            }
+            for (int i = 0; i < open.size(); i++) {
+                if (!current.getBoardValue().equals("B")) {
+                    board.get(open.get(i).getxCoord()).set(open.get(i).getyCoord(), "N");
+                }
+            }
+            if (("[mwfrg.]").indexOf(current.getBoardValue()) != -1) {
+                board.get(current.getxCoord()).set(current.getyCoord(), "V");
             }
             printBoard();
         }

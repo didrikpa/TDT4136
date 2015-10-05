@@ -22,11 +22,33 @@ public class Node {
     public void sethValue(Node goal){
         this.hValue = (Math.abs(xCoord-goal.getxCoord())+(Math.abs(yCoord-goal.getyCoord())));
     }
-    public void setgValue(int gValue){
-        this.gValue += gValue;
+
+    public void updategValue(Node parent){
+        this.gValue+=parent.getgValue();
     }
-    public void setgValue(){
-        this.gValue = 1;
+
+    public void setgValue(String boardValue){
+        if (boardValue.equals("w")){
+            this.gValue = 100;
+        }
+        else if (boardValue.equals("m")) {
+            this.gValue = 50;
+        }
+        else if (boardValue.equals("f")) {
+            this.gValue = 10;
+        }
+        else if (boardValue.equals("g")) {
+            this.gValue = 5;
+        }
+        else if (boardValue.equals("r")) {
+            this.gValue = 1;
+        }
+        else if(boardValue.equals("A")){
+            this.gValue = 0;
+        }
+        else if (boardValue.equals(".")){
+            this.gValue = 1;
+        }
     }
     public void setfValue(){
         this.fValue = gValue+hValue;
@@ -47,7 +69,7 @@ public class Node {
         return hValue;
     }
     public int getgValue(){
-        return gValue;
+        return this.gValue;
     }
     public int getfValue(){
         return fValue;
