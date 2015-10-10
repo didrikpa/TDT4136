@@ -11,7 +11,7 @@ public class ReadFile {
     //This file reads the board textfiles and return them as nested ArrayLists. No further commenting needed.
     public static ArrayList<ArrayList<String>> read() throws IOException {
         ArrayList<ArrayList<String>> board = new ArrayList<ArrayList<String>>();
-        File file = new File("/home/didrikpa/IdeaProjects/ArtificialIntelligence/src/a_star/boards/board-2-4.txt");
+        File file = new File("/home/didrikpa/IdeaProjects/ArtificialIntelligence/src/a_star/boards/board-2-1.txt");
         FileReader fr = new FileReader(file);
         BufferedReader br = new BufferedReader(fr);
         String line;
