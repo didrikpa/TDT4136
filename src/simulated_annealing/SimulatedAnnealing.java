@@ -3,35 +3,34 @@ package simulated_annealing;
 import java.util.ArrayList;
 import java.util.Random;
 
-/**
- * Created by didrikpa on 09.10.15.
- */
 public class SimulatedAnnealing {
     private int m; // rows
     private int n; // columns
     private int k; // constraint
     private int optimal; // Optimal number of eggs.
-    private ArrayList<ArrayList<ArrayList<String>>> neighbors;
-    private ArrayList<Double> neighborValues;
-    private double temp;
+    private ArrayList<ArrayList<ArrayList<String>>> neighbors; // A list containing all legal neighbor boards.
+    private ArrayList<Double> neighborValues; // A list containing the value of the the neighbor boards
+    private double temp; // Temperatur
     private Random random;
-    private ArrayList<ArrayList<Integer>> diagonalsCheck;
-    private ArrayList<ArrayList<String>> board;
-    private ArrayList<ArrayList<String>> pMax;
+    private ArrayList<ArrayList<Integer>> diagonalsCheck; //A list used to check diagonals
+    private ArrayList<ArrayList<String>> board; // The main board.
+    private ArrayList<ArrayList<String>> pMax; // pMax - the neighbor board with best value.
 
+    //Constructor
     public SimulatedAnnealing(int m, int n, int k){
         this.m = m;
         this.n = n;
         this.k = k;
-        this.optimal = k*m;
-        this.temp = optimal;
+        this.optimal = k*m; //THe optimal value is k*m
+        this.temp = optimal; //Set temp to optimal
         this.random = new Random();
         this.board = new ArrayList<>();
         this.neighbors = new ArrayList<>();
         this.diagonalsCheck = new ArrayList<>();
         this.neighborValues = new ArrayList<>();
     }
-   private ArrayList<ArrayList<String>> setBoard(ArrayList<ArrayList<String>> board){
+    // This function sets a random board for the algorithm to start with.
+    private ArrayList<ArrayList<String>> setBoard(ArrayList<ArrayList<String>> board){
         for (int i = 0; i < m; i++) {
             board.add(new ArrayList());
             for (int j = 0; j < n; j++) {
@@ -45,18 +44,20 @@ public class SimulatedAnnealing {
                 }
             }
         }
-       if (!isLegal(board)){
+       if (!isLegal(board)){ // Check if board is legal, if not clear board and make a new one.
            board.clear();
            setBoard(board);
        }
        return board;
     }
+    //Prints the board.
     private void printBoard(){
         for (int i = 0; i < board.size(); i++) {
             System.out.print(board.get(i) + "\n");
         }
         System.out.println("");
     }
+    //Sets up the tiles of which diagonals are to be checked from.
     private ArrayList<ArrayList<Integer>> setUpDiagonals(){
         int counter = 0;
         for (int i = 0; i < m; i++) {
@@ -71,6 +72,7 @@ public class SimulatedAnnealing {
         }
         return diagonalsCheck;
     }
+    //Checks the diagonals
     private boolean checkDiagonals(ArrayList<ArrayList<String>> board){
         for (int i = 0; i < diagonalsCheck.size(); i++) {
             int row = diagonalsCheck.get(i).get(0);
@@ -103,6 +105,7 @@ public class SimulatedAnnealing {
         }
         return true;
     }
+    //Checks the rows.
     private boolean checkRows(ArrayList<ArrayList<String>> currentBoard){
         for (int i = 0; i < m; i++) {
             int counter = 0;
@@ -117,6 +120,7 @@ public class SimulatedAnnealing {
         }
         return true;
     }
+    //Checks the columns
     private boolean checkColumns(ArrayList<ArrayList<String>> currentBoard){
         int a = 1;
         int b = 0;
@@ -136,17 +140,19 @@ public class SimulatedAnnealing {
         }
         return true;
     }
-
+    //checks  rows, columns and diagonals and returns whether the board is legal or not.
     private boolean isLegal(ArrayList<ArrayList<String>> board){//Check if the board is a legal board.
         if (checkColumns(board) && checkRows(board) && checkDiagonals(board)){
             return true;
         }
         return false;
     }
-
+    //The objective function. Gives each board a value based on number of eggs on the board. Since only legal boards can be
+    // generated, the functions gives an ok indication wether a board is good or not.
     private double evaluate(ArrayList<ArrayList<String>> board){
         return optimal-(optimal-countEggs(board));
     }
+    // counts the egss.
     private int countEggs(ArrayList<ArrayList<String>> board){
         int counter = 0;
         for (int i = 0; i < m; i++) {
@@ -158,7 +164,7 @@ public class SimulatedAnnealing {
         }
         return counter;
     }
-
+    //Removes one egg, given the input.
     private ArrayList<ArrayList<String>> removeEgg(ArrayList<ArrayList<String>> board, int row, int col){
         ArrayList<ArrayList<String>> fakeBoard = new ArrayList<>();
         for (int i = 0; i < m; i++) {
@@ -170,7 +176,7 @@ public class SimulatedAnnealing {
         fakeBoard.get(row).set(col, " ");
         return fakeBoard;
     }
-
+    //adds an egg to the board, but only if the board is still legal after the add.
     private ArrayList<ArrayList<String>> addRandomEgg(ArrayList<ArrayList<String>>board , int row, int col){
         ArrayList<ArrayList<String>> fakeBoard = new ArrayList<>();
         for (int i = 0; i < board.size(); i++) {
@@ -182,7 +188,7 @@ public class SimulatedAnnealing {
         fakeBoard.get(row).set(col, "O");
         return fakeBoard;
     }
-
+    // generates neighbors via adding and removing eggs.
     private ArrayList<ArrayList<ArrayList<String>>> generateNeighbours(ArrayList<ArrayList<String>> board){
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < m; j++) {
@@ -202,6 +208,7 @@ public class SimulatedAnnealing {
         }
         return neighbors;
     }
+    //The algorithm. This is actually pretty close to the
     private ArrayList<ArrayList<String>> simulatedAnnealing(ArrayList<ArrayList<String>> board){
         ArrayList<ArrayList<String>> bestBoard = new ArrayList<>();
         for (int i = 0; i < m; i++) {
