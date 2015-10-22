@@ -150,7 +150,17 @@ public class SimulatedAnnealing {
     //The objective function. Gives each board a value based on number of eggs on the board. Since only legal boards can be
     // generated, the functions gives an ok indication wether a board is good or not.
     private double evaluate(ArrayList<ArrayList<String>> board){
-        return optimal-(optimal-countEggs(board));
+        int maincounter = 0;
+        for (int i = 0; i < board.size(); i++) {
+            int counter = 0;
+            for (int j = 0; j < board.size(); j++) {
+                if (board.get(i).get(j).equals("O")){
+                    counter+=1;
+                }
+            }
+            maincounter+=counter;
+        }
+        return maincounter;
     }
     // counts the egss.
     private int countEggs(ArrayList<ArrayList<String>> board){
@@ -177,7 +187,8 @@ public class SimulatedAnnealing {
         return fakeBoard;
     }
     //adds an egg to the board, but only if the board is still legal after the add.
-    private ArrayList<ArrayList<String>> addRandomEgg(ArrayList<ArrayList<String>>board , int row, int col){
+    private ArrayList<ArrayList<ArrayList<String>>> addRandomEgg(ArrayList<ArrayList<String>>board , int row, int col){
+        ArrayList<ArrayList<ArrayList<String>>> neighborswithAdd = new ArrayList<>();
         ArrayList<ArrayList<String>> fakeBoard = new ArrayList<>();
         for (int i = 0; i < board.size(); i++) {
             fakeBoard.add(new ArrayList());
@@ -186,6 +197,30 @@ public class SimulatedAnnealing {
             }
         }
         fakeBoard.get(row).set(col, "O");
+        neighborswithAdd.add(fakeBoard);
+        neighborswithAdd.add(addMoreEggs(fakeBoard));
+
+        return neighborswithAdd;
+    }
+
+    private ArrayList<ArrayList<String>> addMoreEggs(ArrayList<ArrayList<String>> board){
+        ArrayList<ArrayList<String>> fakeBoard = new ArrayList<>();
+        for (int i = 0; i < board.size(); i++) {
+            fakeBoard.add(new ArrayList<>());
+            for (int j = 0; j < board.size(); j++) {
+                fakeBoard.get(i).add(board.get(i).get(j));
+            }
+        }
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < m; j++) {
+                if (fakeBoard.get(i).get(j).equals(" ")){
+                    fakeBoard.get(i).set(j, "O");
+                    if (!isLegal(fakeBoard)){
+                        fakeBoard.get(i).set(j, " ");
+                    }
+                }
+            }
+        }
         return fakeBoard;
     }
     // generates neighbors via adding and removing eggs.
@@ -200,15 +235,16 @@ public class SimulatedAnnealing {
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < m; j++) {
                 if (board.get(i).get(j).equals(" ")){
-                    if (isLegal(addRandomEgg(board, i, j))){
-                        neighbors.add(addRandomEgg(board, i, j));
+                    for (int l = 0; l < addRandomEgg(board, i, j).size(); l++) {
+                        if (isLegal(addRandomEgg(board, i, j).get(l))){
+                            neighbors.add(addRandomEgg(board, i, j).get(l));
+                        }
                     }
                 }
             }
         }
         return neighbors;
     }
-    //The algorithm. This is actually pretty close to the
     private ArrayList<ArrayList<String>> simulatedAnnealing(ArrayList<ArrayList<String>> board){
         ArrayList<ArrayList<String>> bestBoard = new ArrayList<>();
         for (int i = 0; i < m; i++) {
@@ -219,7 +255,6 @@ public class SimulatedAnnealing {
         }
         board = setBoard(board);
         setUpDiagonals();
-        printBoard();
         int iterations = 0;
         while(temp>1){
             if (evaluate(board)>=optimal){
@@ -229,10 +264,10 @@ public class SimulatedAnnealing {
             neighbors.clear();
             neighbors = generateNeighbours(board);
             neighborValues.clear();
-            double a = 0;
+            double a = optimal+1;
             for (int i = 0; i < neighbors.size(); i++) {
                 neighborValues.add(evaluate(neighbors.get(i)));
-                if (evaluate(neighbors.get(i))>a){
+                if (evaluate(neighbors.get(i))<a){
                     a = evaluate(neighbors.get(i));
                 }
             }
@@ -278,7 +313,7 @@ public class SimulatedAnnealing {
     }
 
     public static void main(String[] args) {
-        SimulatedAnnealing sa = new SimulatedAnnealing(8,8,1);
+        SimulatedAnnealing sa = new SimulatedAnnealing(10,10,3  );
         sa.simulatedAnnealing(sa.board);
     }
 }

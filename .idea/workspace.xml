@@ -69,11 +69,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="SimulatedAnnealing.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="SimulatedAnnealing.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/simulated_annealing/SimulatedAnnealing.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="282" column="5" selection-start-line="282" selection-start-column="5" selection-end-line="282" selection-end-column="5" />
+            <state vertical-scroll-proportion="0.775">
+              <caret line="315" column="64" selection-start-line="315" selection-start-column="64" selection-end-line="315" selection-end-column="64" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -81,30 +81,13 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SudokuSolver.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="SudokuSolver.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/constraint_satisfaction_problems/SudokuSolver.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="3.6746988">
-              <caret line="355" column="8" selection-start-line="355" selection-start-column="8" selection-end-line="355" selection-end-column="8" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="355" column="0" selection-start-line="355" selection-start-column="0" selection-end-line="355" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#492#493#0" expanded="true" />
-                <element signature="e#535#536#0" expanded="true" />
-                <element signature="e#548#575#0" expanded="true" />
-                <element signature="e#716#746#0" expanded="true" />
-                <element signature="e#1334#1335#0" expanded="true" />
-                <element signature="e#1406#1407#0" expanded="true" />
-                <element signature="e#2269#2299#0" expanded="true" />
-                <element signature="e#2976#2990#0" expanded="true" />
-                <element signature="e#3537#3551#0" expanded="true" />
-                <element signature="e#4101#4115#0" expanded="true" />
-                <element signature="e#10207#10215#0" expanded="true" />
-                <element signature="e#10488#10496#0" expanded="true" />
-                <element signature="e#11765#11773#0" expanded="true" />
-                <element signature="e#12205#12213#0" expanded="true" />
-                <element signature="e#12518#12526#0" expanded="true" />
-                <element signature="e#12803#12811#0" expanded="true" />
-                <element signature="e#13158#13166#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -142,9 +125,9 @@
         <option value="$PROJECT_DIR$/src/a_star/Animate.java" />
         <option value="$PROJECT_DIR$/src/a_star/AStarAlgorithm.java" />
         <option value="$PROJECT_DIR$/src/a_star/ReadFile.java" />
-        <option value="$PROJECT_DIR$/src/simulated_annealing/SimulatedAnnealing.java" />
         <option value="$PROJECT_DIR$/src/simulated_annealing/SimulatedAnnealingWithoutSpecialization.java" />
         <option value="$PROJECT_DIR$/src/constraint_satisfaction_problems/SudokuSolver.java" />
+        <option value="$PROJECT_DIR$/src/simulated_annealing/SimulatedAnnealing.java" />
       </list>
     </option>
   </component>
@@ -197,7 +180,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
@@ -270,6 +252,7 @@
         </subPane>
       </pane>
       <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -670,12 +653,14 @@
       <workItem from="1444762190529" duration="163000" />
       <workItem from="1444997473786" duration="2506000" />
       <workItem from="1445273567008" duration="30699000" />
-      <workItem from="1445418577120" duration="273000" />
+      <workItem from="1445418577120" duration="1558000" />
+      <workItem from="1445492601055" duration="1688000" />
+      <workItem from="1445502859968" duration="3902000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="141614000" />
+    <option name="totallyTimeSpent" value="148489000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -698,7 +683,7 @@
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.54664487" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.6923077" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3289689" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.14803626" sideWeight="0.6703755" order="0" side_tool="false" content_ui="combo" />
@@ -783,11 +768,50 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/constraint_satisfaction_problems/SudokuSolver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="355" column="0" selection-start-line="355" selection-start-column="0" selection-end-line="355" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/simulated_annealing/SimulatedAnnealing.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="282" column="5" selection-start-line="282" selection-start-column="5" selection-end-line="282" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/constraint_satisfaction_problems/SudokuSolver.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/simulated_annealing/SimulatedAnnealing.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/simulated_annealing/SimulatedAnnealingWithoutSpecialization.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="55" column="0" selection-start-line="55" selection-start-column="0" selection-end-line="55" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1076,47 +1100,29 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/simulated_annealing/SimulatedAnnealing.java">
+    <entry file="file://$PROJECT_DIR$/src/simulated_annealing/SimulatedAnnealingWithoutSpecialization.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="4.2650604">
+          <caret line="59" column="2" selection-start-line="59" selection-start-column="2" selection-end-line="59" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/constraint_satisfaction_problems/SudokuSolver.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="282" column="5" selection-start-line="282" selection-start-column="5" selection-end-line="282" selection-end-column="5" />
+          <caret line="355" column="0" selection-start-line="355" selection-start-column="0" selection-end-line="355" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/simulated_annealing/SimulatedAnnealingWithoutSpecialization.java">
+    <entry file="file://$PROJECT_DIR$/src/simulated_annealing/SimulatedAnnealing.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="4.2650604">
-          <caret line="59" column="2" selection-start-line="59" selection-start-column="2" selection-end-line="59" selection-end-column="2" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/constraint_satisfaction_problems/SudokuSolver.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="3.6746988">
-          <caret line="355" column="8" selection-start-line="355" selection-start-column="8" selection-end-line="355" selection-end-column="8" />
+        <state vertical-scroll-proportion="0.775">
+          <caret line="315" column="64" selection-start-line="315" selection-start-column="64" selection-end-line="315" selection-end-column="64" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#492#493#0" expanded="true" />
-            <element signature="e#535#536#0" expanded="true" />
-            <element signature="e#548#575#0" expanded="true" />
-            <element signature="e#716#746#0" expanded="true" />
-            <element signature="e#1334#1335#0" expanded="true" />
-            <element signature="e#1406#1407#0" expanded="true" />
-            <element signature="e#2269#2299#0" expanded="true" />
-            <element signature="e#2976#2990#0" expanded="true" />
-            <element signature="e#3537#3551#0" expanded="true" />
-            <element signature="e#4101#4115#0" expanded="true" />
-            <element signature="e#10207#10215#0" expanded="true" />
-            <element signature="e#10488#10496#0" expanded="true" />
-            <element signature="e#11765#11773#0" expanded="true" />
-            <element signature="e#12205#12213#0" expanded="true" />
-            <element signature="e#12518#12526#0" expanded="true" />
-            <element signature="e#12803#12811#0" expanded="true" />
-            <element signature="e#13158#13166#0" expanded="true" />
           </folding>
         </state>
       </provider>
