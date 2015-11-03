@@ -237,7 +237,10 @@ public class SimulatedAnnealing {
                 if (board.get(i).get(j).equals(" ")){
                     for (int l = 0; l < addRandomEgg(board, i, j).size(); l++) {
                         if (isLegal(addRandomEgg(board, i, j).get(l))){
-                            neighbors.add(addRandomEgg(board, i, j).get(l));
+                            if (!neighbors.contains(addRandomEgg(board, i, j).get(l))){
+                                neighbors.add(addRandomEgg(board, i, j).get(l));
+                            }
+
                         }
                     }
                 }
@@ -246,6 +249,7 @@ public class SimulatedAnnealing {
         return neighbors;
     }
     private ArrayList<ArrayList<String>> simulatedAnnealing(ArrayList<ArrayList<String>> board){
+        long startTime = System.currentTimeMillis();
         ArrayList<ArrayList<String>> bestBoard = new ArrayList<>();
         for (int i = 0; i < m; i++) {
             bestBoard.add(new ArrayList<>());
@@ -258,6 +262,10 @@ public class SimulatedAnnealing {
         int iterations = 0;
         while(temp>1){
             if (evaluate(board)>=optimal){
+                long endTime   = System.currentTimeMillis();
+                long totalTime = endTime - startTime;
+                System.out.println(totalTime);
+                System.out.println(iterations);
                 printBoard();
                 return board;
             }
@@ -306,14 +314,13 @@ public class SimulatedAnnealing {
                     }
                 }
             }
-            System.out.println(iterations);
+            //System.out.println(iterations);
         }
-        printBoard();
         return bestBoard;
     }
 
     public static void main(String[] args) {
-        SimulatedAnnealing sa = new SimulatedAnnealing(10,10,3  );
+        SimulatedAnnealing sa = new SimulatedAnnealing(8,8,1);
         sa.simulatedAnnealing(sa.board);
     }
 }

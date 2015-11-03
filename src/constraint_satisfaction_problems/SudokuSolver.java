@@ -3,10 +3,7 @@ package constraint_satisfaction_problems;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Scanner;
+import java.util.*;
 
 public class SudokuSolver {
     public static interface ValuePairFilter {
@@ -25,6 +22,8 @@ public class SudokuSolver {
     }
 
     public static class CSP {
+        private int backtrackCounter = 0;
+        private int failCounter = 0;
         @SuppressWarnings("unchecked")
         private VariablesToDomainsMapping deepCopyAssignment(VariablesToDomainsMapping assignment) {
             VariablesToDomainsMapping copy = new VariablesToDomainsMapping();
@@ -195,8 +194,51 @@ public class SudokuSolver {
          * that took place in previous iterations of the loop.
          */
         public VariablesToDomainsMapping backtrack(VariablesToDomainsMapping assignment) {
-            // TODO: IMPLEMENT THIS
-            return assignment;
+            this.backtrackCounter+=1; // Increases how many times the backtrack-function is called.
+            System.out.println("Counter = " + backtrackCounter);
+            int length = (int)Math.round(Math.sqrt(assignment.size())); // Gives the length of a domain.
+            int counter = 0; // USed to check if the board has been solved.
+            ArrayList<String> unassignedVariables = new ArrayList<>(); // Unasigned values - sent to selectUnasignedValue for random selection
+            //Checks the domain of every var and adds the unasigned variables to the unasignedVariables-list.
+            for (int i = 0; i < length; i++) {
+                for (int j = 0; j < length; j++) {
+                    String key = i+"-"+j;
+                    if (assignment.get(key).size()>1){
+                        counter+=1;
+                        unassignedVariables.add(key);
+                    }
+                }
+            }
+            //If all vars have a domain that only contains one value, the board is solved and is returned.
+            if (counter<1){
+                return assignment;
+            }
+            String var = selectUnassignedVariable(unassignedVariables);// Sets var to an unassigned variable.
+            ArrayList<String> odv = orderDomainValues(var, assignment); // Randomizes the order the domain is in.
+            for (int i = 0; i < odv.size(); i++) { // For each value in odv.
+                VariablesToDomainsMapping temp = deepCopyAssignment(assignment); // Make a copy.
+                ArrayList<String> tempVal = new ArrayList<>(); //Make a list to put current value in
+                tempVal.add(odv.get(i));
+                temp.put(var, tempVal); // then put the list containing current value in at var in the deepcopy of assignment.
+                boolean inferences = inference(temp, getAllNeighboringArcs(var)); //Inference on temp and the neighboring arcs of var.
+                if (inferences){ //Check if inference returns true.
+                    //If inference is true:
+                    VariablesToDomainsMapping result = backtrack(temp);
+                    if (!result.isEmpty()) // if result is not empty, then return result.
+                        return result;
+                }
+            }
+            failCounter+=1; // Increase failcounter, because if this part is run, then the algorithm return failure
+            System.out.println("Failcounter = " + failCounter);
+            assignment.clear(); //Clear assignment in so that its possible to check whether the result is failure or not.
+            return assignment; //return failure.
+        }
+
+        public ArrayList<String> orderDomainValues(String var, VariablesToDomainsMapping assigment){ //Randomize the order of the domain
+            ArrayList<String> domains = assigment.get(var); //Set the domain.
+            Random random = new Random(); //Random
+            Collections.shuffle(domains, random); //Shuffle randomized
+            return domains; // return shuffled list.
         }
 
         /**
@@ -205,9 +247,11 @@ public class SudokuSolver {
          * 'assignment' that have not yet been decided, i.e. whose list of legal
          * values has a length greater than one.
          */
-        public String selectUnassignedVariable(VariablesToDomainsMapping assignment) {
-            // TODO: IMPLEMENT THIS
-            return "";
+        public String selectUnassignedVariable(ArrayList<String> unasignedVariables) {//takes in a list of unasignedVariables
+            int length = unasignedVariables.size(); //Number of unasigned vriables
+            Random random = new Random(); //random
+            int randomNumber = random.nextInt(length); //random number in the intervall 0-length
+            return unasignedVariables.get(randomNumber); // return a random element from unasignedVariables.
         }
 
         /**
@@ -216,9 +260,31 @@ public class SudokuSolver {
          * values for each undecided variable. 'queue' is the initial queue of
          * arcs that should be visited.
          */
-        public boolean inference(VariablesToDomainsMapping assignment, ArrayList<Pair<String>> queue) {
-            // TODO: IMPLEMENT THIS
-            return false;
+        // Makes every arc arc-consistent.
+        public boolean inference(VariablesToDomainsMapping assignment, ArrayList<Pair<String>> queue) { // inference is an implementation of th AC3-algorithm in the book.
+            while (queue.size()>0){ // while there still are pairs to be checked.
+                String xi = queue.get(0).toString().replaceAll("[()]", "").split(",")[0]; // The first variable, xi, in the first element int the queue.
+                String xj = queue.get(0).toString().replaceAll("[()]", "").split(",")[1]; // The second variable, xj, in the first element in the queue
+                queue.remove(0); // remove the first element in the queue.
+                if (revise(assignment, xi, xj)){ //If the domain is revised
+                    if (assignment.get(xi).isEmpty()){ // if the domain is empty return false.
+                        return false;
+                    }
+                    ArrayList<Pair<String>> temp = getAllNeighboringArcs(xi);//All neighboring arcs
+                    for (int i = 0; i < temp.size(); i++) { //This for-loop is to remove xj from the neighboring arcs list temp.
+                        String findXj1 = temp.get(i).toString().replaceAll("[()]", "").split(",")[0];
+                        String findXj2 = temp.get(i).toString().replaceAll("[()]", "").split(",")[1];
+                        if (findXj1.equals(xj) || findXj2.equals(xj)){
+                            temp.remove(i);
+                        }
+                    }
+                    int a = temp.size();
+                    for (int i = 0; i < a; i++) { // iterate through the neighboring arcs.
+                        queue.add(new Pair<String>(temp.get(i).toString().replaceAll("[()]", "").split(",")[0], xi)); // add all neighbor arcs and xi in a pair to queue.
+                    }
+                }
+            }
+            return true;
         }
 
         /**
@@ -231,8 +297,27 @@ public class SudokuSolver {
          * 'assignment'.
          */
         public boolean revise(VariablesToDomainsMapping assignment, String i, String j) {
-            // TODO: IMPLEMENT THIS
-            return false;
+            boolean revise = false; //Set revise to false
+            ArrayList<String> is = assignment.get(i); // The domain of i
+            ArrayList<String> js = assignment.get(j); // The domain of j
+            ArrayList<Pair<String>> constrs = constraints.get(i).get(j); // constraints between i and j.
+            for (int k = 0; k < is.size(); k++) {// Iterate through every element in i's domain.
+                int counter = 0; // Used to check whether we revise or not.
+                for (int l = 0; l < js.size(); l++) { // Iterate through every element in j's domain.
+                    for (int m = 0; m < constrs.size(); m++) { // iterate through the contraints.
+                        //Checks if there is a value y in j's domain that satisfies the between the value in i' domain.
+                        if (constrs.get(m).toString().replaceAll("[()]", "").split(",")[0].equals(is.get(k)) && constrs.get(m).toString().replaceAll("[()]", "").split(",")[1].equals(js.get(l))){
+                            counter+=1; // if there is a value in i's domain and in j's domain that satisfies the contraint add to the counter
+                        }
+                    }
+                }
+
+                if (counter <1){ // if the counter is 0, there are no value in j's domain that satisfies the constraint with the value from i's domain.
+                    is.remove(k); // remove k from is
+                    revise = true; // set revise to true.
+                }
+            }
+            return revise;
         }
     }
 
@@ -353,6 +438,7 @@ public class SudokuSolver {
     }
 
     public static void main(String[] args) {
-
+        VariablesToDomainsMapping vtdm = createSudokuCSP("/home/didrikpa/IdeaProjects/ArtificialIntelligence/src/constraint_satisfaction_problems/boards/easy.txt").backtrackingSearch();
+        printSudokuSolution(vtdm);
     }
 }
